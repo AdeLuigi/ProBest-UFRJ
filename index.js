@@ -13,12 +13,11 @@ let derrotas = 0
 app.listen(port, () => {
     let i = 0;
 
-    while (i < 10000000) {
+    while (i < 1000000000) {
         // craps();
         megaSena();
         i++;
     }
-
     console.log("vitorias: ", vitorias)
     console.log("derrotas: ", derrotas)
 })
@@ -90,7 +89,8 @@ function megaSena(params) {
     let meusNumeros = [23,54,32,54,32,21]
     let ganhou = 0;
     for (let index = 0; index < 6; index++) {
-        numerosMegaSena.push(Math.floor(Math.random() * 60) + 1);
+        geraNumeroAleatorio(meusNumeros)
+        numerosMegaSena.push();
     }
     let resultado;
     meusNumeros.forEach(index => {
@@ -102,4 +102,16 @@ function megaSena(params) {
 
     ganhou == 5 ? vitorias++ : derrotas++
     
+}
+
+function geraNumeroAleatorio(arrayNumeros = []) {
+    const numeroAleatorio = Math.floor(Math.random() * 60) + 1
+    const resultado = arrayNumeros.find(item => numeroAleatorio == item)
+
+    if (resultado) {
+        geraNumeroAleatorio(arrayNumeros)
+    }
+
+    return resultado
+
 }
