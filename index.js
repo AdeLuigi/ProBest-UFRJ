@@ -8,11 +8,23 @@ let number = 0;
 app.use(express.json());
 
 app.use(cors())
-
-let primeiroLancamento = 0;
-
+let vitorias = 0
+let derrotas = 0
 app.listen(port, () => {
+    let i = 0;
 
+    while (i < 10000000) {
+        // craps();
+        megaSena();
+        i++;
+    }
+
+    console.log("vitorias: ", vitorias)
+    console.log("derrotas: ", derrotas)
+})
+
+function craps(params) {
+    let primeiroLancamento = 0;
     let controle = true
     let i = 0
     let arrayDosLancamentos = []
@@ -24,33 +36,40 @@ app.listen(port, () => {
         arrayDosLancamentos.push(resultado)
     
         if ((resultado == 7 || resultado == 11) &&  primeiroLancamento == 0) {
-            arrayDosLancamentos.push("Você ganhou")
-            console.log({
-                primeiroLancamento: primeiroLancamento,
-                controle: controle,
-                ultimoLancamento: arrayDosLancamentos[i]
-            })
+            // arrayDosLancamentos.push("Você ganhou")
+            // console.log({
+            //     primeiroLancamento: primeiroLancamento,
+            //     controle: controle,
+            //     ultimoLancamento: arrayDosLancamentos[i]
+            // })
+            vitorias++
             controle = false
 
-        }else if (resultado == 7){
-            console.log({
-                primeiroLancamento: primeiroLancamento,
-                controle: controle,
-                ultimoLancamento: arrayDosLancamentos[i]
-            })
-            arrayDosLancamentos.push("Você perdeu")
+        }else if ((resultado == 2 || resultado == 3 || resultado == 12) &&  primeiroLancamento == 0) {
+            derrotas++
             controle = false
-            console.log("você perdeu")
+        }
+        else if (resultado == 7){
+            // console.log({
+            //     primeiroLancamento: primeiroLancamento,
+            //     controle: controle,
+            //     ultimoLancamento: arrayDosLancamentos[i]
+            // })
+            // arrayDosLancamentos.push("Você perdeu")
+            derrotas++
+            controle = false
+            // console.log("você perdeu")
 
         }else if (resultado == primeiroLancamento) {
-            console.log({
-                primeiroLancamento: primeiroLancamento,
-                controle: controle,
-                ultimoLancamento: arrayDosLancamentos[i]
-            })
-            arrayDosLancamentos.push("Você ganhou")
+            // console.log({
+            //     primeiroLancamento: primeiroLancamento,
+            //     controle: controle,
+            //     ultimoLancamento: arrayDosLancamentos[i]
+            // })
+            // arrayDosLancamentos.push("Você ganhou")
+            vitorias++
             controle = false
-            console.log("você ganhou")
+            // console.log("você ganhou")
         }
 
         if (primeiroLancamento == 0) {
@@ -60,6 +79,27 @@ app.listen(port, () => {
         i++;
     }
 
-    console.log(arrayDosLancamentos)
+    // console.log(arrayDosLancamentos)
 
-})
+    return;
+
+}
+
+function megaSena(params) {
+    let numerosMegaSena = []
+    let meusNumeros = [23,54,32,54,32,21]
+    let ganhou = 0;
+    for (let index = 0; index < 6; index++) {
+        numerosMegaSena.push(Math.floor(Math.random() * 60) + 1);
+    }
+    let resultado;
+    meusNumeros.forEach(index => {
+        resultado = numerosMegaSena.find((element) => element == index )
+        if (resultado != undefined) {
+            ganhou++
+        }
+    });
+
+    ganhou == 5 ? vitorias++ : derrotas++
+    
+}
